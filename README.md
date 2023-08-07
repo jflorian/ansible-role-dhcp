@@ -199,12 +199,16 @@ ranges:
 
 You can specify hosts that should get a fixed IP address based on their MAC by setting the `dhcp_hosts` option. This is a list of dicts with the following three keys, of which `name` and `mac` are mandatory:
 
-| Option     | Comment                                         |
-| :--------- | :---------------------------------------------- |
-| `name`     | The name of the host                            |
-| `mac`      | The MAC address of the host                     |
-| `ip`       | The IP address to be assigned to the host       |
-| `hostname` | Hostname to be assigned through DHCP (optional) |
+| Option           | Comment                                         |
+| :--------------- | :---------------------------------------------- |
+| `name`           | The name of the host                            |
+| `mac`            | The MAC address of the host                     |
+| `ip`             | The IP address to be assigned to the host       |
+| `hostname`       | Hostname to be assigned through DHCP (optional) |
+| `max_lease_time` | The maximum lease time for this host            |
+| `on_event`       | Statements to execute for lease events (1)      |
+
+(1) The `on_event` dict accepts the following keys: `commit`, `release` and `expiry`.
 
 ```Yaml
 dhcp_hosts:
@@ -214,6 +218,12 @@ dhcp_hosts:
   - name: cl2
     mac: '00:de:ad:be:ef:00'
     ip: 192.168.222.151
+  - name: cl3
+    mac: '00:de:ad:be:ef:01'
+    ip: 192.168.222.152
+    max_lease_time: 600
+    on_event:
+      commit:       'execute ("/usr/local/bin/my-tool", "commit", host-decl-name)'
 ```
 
 ### Specify PXEBoot server

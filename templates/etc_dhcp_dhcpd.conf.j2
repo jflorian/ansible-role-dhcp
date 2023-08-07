@@ -304,6 +304,24 @@ host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }}
 {% if host.hostname is defined %}
   option host-name "{{ host.hostname }}";
 {% endif %}
+{% if host.max_lease_time is defined %}
+  max-lease-time {{ host.max_lease_time }};
+{% endif %}
+{% if host.on_event.commit is defined %}
+  on commit {
+    {{ host.on_event.commit }};
+  }
+{% endif %}
+{% if host.on_event.release is defined %}
+  on release {
+    {{ host.on_event.release }};
+  }
+{% endif %}
+{% if host.on_event.expiry is defined %}
+  on expiry {
+    {{ host.on_event.expiry }};
+  }
+{% endif %}
 }
 {% endfor %}
 {% endif %}
