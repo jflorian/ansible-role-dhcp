@@ -223,7 +223,7 @@ dhcp_hosts:
     ip: 192.168.222.152
     max_lease_time: 600
     on_event:
-      commit:       'execute ("/usr/local/bin/my-tool", "commit", host-decl-name)'
+      commit:       'execute ("/usr/local/bin/my-tool", "commit", host-decl-name);'
 ```
 
 ### Specify PXEBoot server
